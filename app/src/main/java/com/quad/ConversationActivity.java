@@ -7,14 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class ConversationActivity extends AppCompatActivity {
+public class ConversationActivity extends QuadActivity {
 
   public static void launchActivity(Activity activity) {
     activity.startActivity(new Intent(activity, ConversationActivity.class));
   }
 
   @Override
-  protected void onCreate(Bundle savedInstanceState) {
+  public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_conversation);
   }

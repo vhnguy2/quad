@@ -133,8 +133,10 @@ public class ConversationListAdapter extends
     }
 
     void bindData(ConversationMessage conversationMessage) {
-      senderView.setText(conversationMessage.getUserId());
       bodyView.setText(conversationMessage.getMessage());
+      if (senderView != null) {
+        senderView.setText(conversationMessage.getUserId());
+      }
     }
   }
 }

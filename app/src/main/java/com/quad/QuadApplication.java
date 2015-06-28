@@ -30,7 +30,7 @@ public class QuadApplication extends Application {
   }
 
   public boolean isUserLoggedIn() {
-    return StringUtils.isEmpty(mSharedPrefs.getString(USER_ID_KEY, null));
+    return !StringUtils.isEmpty(getUserId());
   }
 
   public void setUserId(String userId) {

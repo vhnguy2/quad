@@ -9,9 +9,11 @@ import android.support.v7.widget.RecyclerView.AdapterDataObserver;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -143,6 +145,17 @@ public class ConversationActivityFragment extends Fragment {
         } else {
           mFirebaseTypingIndicatorRef.setValue(new TypingIndicator(mCurrentUserId));
         }
+      }
+    });
+
+    mComposeTextView.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+      @Override
+      public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if(event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+          mSendButton.performClick();
+          return true;
+        }
+        return false;
       }
     });
   }

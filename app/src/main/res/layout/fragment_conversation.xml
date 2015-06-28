@@ -39,7 +39,8 @@
         android:layout_weight="1"
         android:padding="10dp"
         android:background="@color/transparent"
-        android:maxLines="3"
+        android:maxLines="2"
+        android:imeOptions="actionDone"
         />
     <View
         android:layout_width="1dp"
