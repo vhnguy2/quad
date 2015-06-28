@@ -30,8 +30,7 @@ public class ConversationListAdapter extends
   public ConversationListAdapter() {
     mConversationMessageList = Lists.newArrayList();
     mKeyToMessageMap = Maps.newHashMap();
-//    mLoggedInUserId = QuadApplication.getInstance().getUserId();
-    mLoggedInUserId = ConversationActivityFragment.USER_ID;
+    mLoggedInUserId = QuadApplication.getInstance().getUserId();
   }
 
   /**

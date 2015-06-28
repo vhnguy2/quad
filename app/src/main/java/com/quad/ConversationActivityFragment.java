@@ -28,9 +28,8 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ConversationActivityFragment extends Fragment {
 
-  public static final String USER_ID = "viet";
-
   private Activity mActivity;
+  private String mCurrentUserId;
 
   private Firebase mFirebaseRef;
   private Firebase mFirebaseTypingIndicatorRef;
@@ -56,6 +55,8 @@ public class ConversationActivityFragment extends Fragment {
 
     mFirebaseRef = new Firebase(Constants.FIREBASE_URL).child("chat");
     mFirebaseTypingIndicatorRef = new Firebase(Constants.FIREBASE_URL).child("typing_indicator");
+
+    mCurrentUserId = QuadApplication.getInstance().getUserId();
   }
 
   @Override
@@ -140,7 +141,7 @@ public class ConversationActivityFragment extends Fragment {
         if (s.length() == 0) {
           mFirebaseTypingIndicatorRef.setValue(null);
         } else {
-          mFirebaseTypingIndicatorRef.setValue(new TypingIndicator(USER_ID));
+          mFirebaseTypingIndicatorRef.setValue(new TypingIndicator(mCurrentUserId));
         }
       }
     });
@@ -204,7 +205,7 @@ public class ConversationActivityFragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
               String userIdOfTyper = dataSnapshot.getValue(TypingIndicator.class).getUserId();
-              if (StringUtils.equals(userIdOfTyper, USER_ID)) {
+              if (StringUtils.equals(userIdOfTyper, mCurrentUserId)) {
                 return;
               }
               mTypingIndicator.setVisibility(View.VISIBLE);
@@ -214,7 +215,7 @@ public class ConversationActivityFragment extends Fragment {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
               String userIdOfTyper = dataSnapshot.getValue(TypingIndicator.class).getUserId();
-              if (StringUtils.equals(userIdOfTyper, USER_ID)) {
+              if (StringUtils.equals(userIdOfTyper, mCurrentUserId)) {
                 return;
               }
               mTypingIndicator.setVisibility(View.VISIBLE);
@@ -241,6 +242,6 @@ public class ConversationActivityFragment extends Fragment {
   }
 
   private void sendMessage(String message) {
-    mFirebaseRef.push().setValue(new ConversationMessage(USER_ID, message));
+    mFirebaseRef.push().setValue(new ConversationMessage(mCurrentUserId, message));
   }
 }

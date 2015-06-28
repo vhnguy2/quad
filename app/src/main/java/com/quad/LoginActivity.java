@@ -43,7 +43,7 @@ public class LoginActivity extends Activity {
           Toast.makeText(LoginActivity.this, "Please fill out the form", Toast.LENGTH_SHORT).show();
         }
         QuadApplication.getInstance().setUserId(phone);
-//        ConversationActivity.launchActivity();
+        ConversationActivity.launchActivity(LoginActivity.this);
         finish();
       }
     });
