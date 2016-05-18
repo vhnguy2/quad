@@ -1,12 +1,15 @@
 package com.quad;
 
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.firebase.client.DataSnapshot;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -131,19 +134,19 @@ public class ConversationListAdapter extends
   }
 
   public static class MessageVH extends RecyclerView.ViewHolder {
-    public TextView senderView;
+    public SimpleDraweeView senderView;
     public TextView bodyView;
 
     public MessageVH(View v) {
       super(v);
-      senderView = (TextView) v.findViewById(R.id.message_sender);
+      senderView = (SimpleDraweeView) v.findViewById(R.id.message_sender);
       bodyView = (TextView) v.findViewById(R.id.message_body);
     }
 
     void bindData(ConversationMessage conversationMessage) {
       bodyView.setText(conversationMessage.getMessage());
-      if (senderView != null) {
-        senderView.setText(conversationMessage.getUserId());
+      if (senderView != null && !TextUtils.isEmpty(conversationMessage.getImageUrl())) {
+        senderView.setImageURI(Uri.parse(conversationMessage.getImageUrl()));
       }
     }
   }

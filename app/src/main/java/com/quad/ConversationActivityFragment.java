@@ -254,6 +254,7 @@ public class ConversationActivityFragment extends Fragment {
   }
 
   private void sendMessage(String message) {
-    mFirebaseRef.push().setValue(new ConversationMessage(mCurrentUserId, message));
+    String imageUrl = "https://scontent.fsnc1-1.fna.fbcdn.net/v/t1.0-1/p160x160/13256147_10103470961502250_321694509554815103_n.jpg?oh=d7e726257dae24176d7c0e56a45e8ec8&oe=57A637F2";
+    mFirebaseRef.push().setValue(new ConversationMessage(mCurrentUserId, imageUrl, message));
   }
 }

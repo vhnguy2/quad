@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.firebase.client.Firebase;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +22,7 @@ public class QuadApplication extends Application {
     super.onCreate();
     mApp = this;
     Firebase.setAndroidContext(this);
+    Fresco.initialize(this);
     mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
   }
