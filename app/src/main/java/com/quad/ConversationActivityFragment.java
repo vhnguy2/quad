@@ -13,7 +13,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -101,7 +100,7 @@ public class ConversationActivityFragment extends Fragment {
     mLayoutManager = new LinearLayoutManager(getActivity());
     mLayoutManager.setStackFromEnd(true);
     mRecyclerView.setLayoutManager(mLayoutManager);
-    mAdapter = new ConversationListAdapter();
+    mAdapter = new ConversationListAdapter(mLayoutManager);
     mRecyclerView.setAdapter(mAdapter);
 
     setupListeners();

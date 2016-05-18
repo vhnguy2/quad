@@ -1,5 +1,6 @@
 package com.quad;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +21,16 @@ public class ConversationListAdapter extends
     RecyclerView.Adapter<ConversationListAdapter.MessageVH> {
 
   private final String mLoggedInUserId;
-  private List<ConversationMessage> mConversationMessageList;
-  private Map<String, ConversationMessage> mKeyToMessageMap;
+  private final List<ConversationMessage> mConversationMessageList;
+  private final Map<String, ConversationMessage> mKeyToMessageMap;
+  private final LinearLayoutManager mLinearLayoutManager;
 
   private enum RowType {
     ME, OTHER
   }
 
-  public ConversationListAdapter() {
+  public ConversationListAdapter(LinearLayoutManager linearLayoutManager) {
+    mLinearLayoutManager = linearLayoutManager;
     mConversationMessageList = Lists.newArrayList();
     mKeyToMessageMap = Maps.newHashMap();
     mLoggedInUserId = QuadApplication.getInstance().getUserId();
@@ -46,9 +49,11 @@ public class ConversationListAdapter extends
     ConversationMessage message = dataSnapshot.getValue(ConversationMessage.class);
     mKeyToMessageMap.put(dataSnapshot.getKey(), message);
 
+    int addIndexPosition = 0;
     // Insert into the correct location, based on previousChildName
     if (previousChildName == null) {
-      mConversationMessageList.add(0, message);
+      addIndexPosition = 0;
+      mConversationMessageList.add(addIndexPosition, message);
     } else {
       ConversationMessage previousMessage = mKeyToMessageMap.get(previousChildName);
       int previousIndex = mConversationMessageList.indexOf(previousMessage);
@@ -58,9 +63,12 @@ public class ConversationListAdapter extends
       } else {
         mConversationMessageList.add(nextIndex, message);
       }
+
+      addIndexPosition = nextIndex;
     }
 
-    notifyDataSetChanged();
+    notifyItemInserted(addIndexPosition);
+    mLinearLayoutManager.scrollToPosition(addIndexPosition);
   }
 
   public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -73,7 +81,7 @@ public class ConversationListAdapter extends
     mConversationMessageList.set(index, newMessage);
     mKeyToMessageMap.put(messageKey, newMessage);
 
-    notifyDataSetChanged();
+    notifyItemChanged(index);
   }
 
   public void onChildRemoved(DataSnapshot dataSnapshot) {
